@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation';
 import { initAdmin } from '@/lib/firebaseAdmin';
+import YouTubeEmbed from '@/components/YoutubeEmbed';
 
 interface Statistic {
     label: string;
@@ -20,7 +21,6 @@ interface PromoPageProps {
 export default async function PromoPage({ params }: PromoPageProps) {
     const { token } = params;
 
-    // Initialize Firebase Admin
     const adminApp = await initAdmin();
     const db = adminApp.firestore();
 
@@ -37,7 +37,6 @@ export default async function PromoPage({ params }: PromoPageProps) {
         }
 
     if (!companyData) {
-      // This will trigger Next.js to render the 404 page.
         notFound();
     }
 
@@ -50,10 +49,7 @@ export default async function PromoPage({ params }: PromoPageProps) {
             />
             <h1 className="text-3xl font-bold mb-4">Welcome, {companyData.name}</h1>
             <div className="my-8">
-            <video width="640" controls className="w-full">
-                <source src={companyData.videoUrl} type="video/mp4" />
-                Your browser does not support the video tag.
-            </video>
+                <YouTubeEmbed url={companyData.videoUrl} />
             </div>
                 {companyData.statistics && companyData.statistics.length > 0 && (
             <div>
