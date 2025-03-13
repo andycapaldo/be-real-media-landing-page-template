@@ -5,7 +5,7 @@ import YouTubeEmbed from '@/components/YoutubeEmbed';
 
 interface CompanyData {
     logoUrl: string;
-    name: string;
+    companyName: string;
     videoUrl: string;
 }
 
@@ -39,10 +39,10 @@ export default async function PromoPage({ params }: PromoPageProps) {
         <div className="p-8 font-sans">
             <img
             src={companyData.logoUrl}
-            alt={`${companyData.name} logo`}
+            alt={`${companyData.companyName} logo`}
             className="max-w-xs mb-8"
             />
-            <h1 className="text-3xl font-bold mb-4">Welcome, {companyData.name}</h1>
+            <h1 className="text-3xl font-bold mb-4">Welcome, {companyData.companyName}</h1>
             <div className="my-8">
                 <YouTubeEmbed url={companyData.videoUrl} />
             </div>
