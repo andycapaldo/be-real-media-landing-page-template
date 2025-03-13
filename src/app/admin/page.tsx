@@ -3,25 +3,48 @@
 import { useAuth } from "@/lib/use-auth";
 import { useState } from "react";
 
-export default function Protected() {
+export default function CampaignForm() {
     const { isLoading } = useAuth();
     const [formData, setFormData] = useState({
         companyName: '',
         logoUrl: '',
         videoUrl: '',
     });
+    const [message, setMessage] = useState('');
     
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setFormData((prev) => ({
             ...prev,
             [name]: value,
-            }));
-        };
+        }));
+    };
     
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log(formData);
+        try {
+            const res = await fetch('/api/campaign', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            });
+        if (res.ok) {
+            const data = await res.json();
+            setMessage(`Campaign created successfully with ID: ${data.id}`);
+            setFormData({
+                companyName: '',
+                logoUrl: '',
+                videoUrl: '',
+            });
+        } else {
+            setMessage('Failed to create campaign. Please try again.');
+        }
+        } catch (error) {
+            console.error('Error:', error);
+            setMessage('An error occurred while creating the campaign.');
+        }
     };
 
 
