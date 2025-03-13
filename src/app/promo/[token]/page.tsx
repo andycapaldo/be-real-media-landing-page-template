@@ -2,16 +2,11 @@ import { notFound } from 'next/navigation';
 import { initAdmin } from '@/lib/firebaseAdmin';
 import YouTubeEmbed from '@/components/YoutubeEmbed';
 
-interface Statistic {
-    label: string;
-    value: string | number;
-}
 
 interface CompanyData {
     logoUrl: string;
     name: string;
     videoUrl: string;
-    statistics?: Statistic[];
 }
 
 interface PromoPageProps {
@@ -51,18 +46,6 @@ export default async function PromoPage({ params }: PromoPageProps) {
             <div className="my-8">
                 <YouTubeEmbed url={companyData.videoUrl} />
             </div>
-                {companyData.statistics && companyData.statistics.length > 0 && (
-            <div>
-                <h2 className="text-2xl font-semibold mb-2">Statistics</h2>
-                <ul className="list-disc list-inside">
-                {companyData.statistics.map((stat, index) => (
-                    <li key={index}>
-                        <span className="font-bold">{stat.label}:</span> {stat.value}
-                    </li>
-                ))}
-                </ul>
-            </div>
-            )}
         </div>
     );
 }
