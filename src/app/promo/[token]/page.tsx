@@ -9,14 +9,8 @@ interface CompanyData {
     videoUrl: string;
 }
 
-export default async function PromoPage({ 
-    params,
-    searchParams 
-    }: {
-    params: { token: string };
-    searchParams: { [key: string]: string | string[] | undefined };
-    } ) {
-    const { token } = params;
+export default async function PromoPage(props: any) {
+    const { token } = props.params;
 
     const adminApp = await initAdmin();
     const db = adminApp.firestore();
