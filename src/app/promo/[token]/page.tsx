@@ -10,9 +10,11 @@ interface CompanyData {
 }
 
 export default async function PromoPage({ 
-    params, 
+    params,
+    searchParams 
     }: {
     params: { token: string };
+    searchParams: { [key: string]: string | string[] | undefined };
     } ) {
     const { token } = params;
 
