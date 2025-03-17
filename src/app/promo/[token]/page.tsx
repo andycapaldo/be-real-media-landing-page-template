@@ -9,11 +9,11 @@ interface CompanyData {
     videoUrl: string;
 }
 
-interface PromoPageProps {
+export default async function PromoPage({ 
+    params, 
+    }: {
     params: { token: string };
-}
-
-export default async function PromoPage({ params }: PromoPageProps) {
+    } ) {
     const { token } = params;
 
     const adminApp = await initAdmin();
