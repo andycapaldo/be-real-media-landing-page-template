@@ -36,14 +36,14 @@ export default async function PromoPage({ params }: PromoPageProps) {
     }
 
     return (
-        <div className="p-8 font-sans">
+        <div className="min-h-screen flex flex-col items-center justify-center p-8 font-sans bg-cyan-50">
             <img
             src={companyData.logoUrl}
             alt={`${companyData.companyName} logo`}
             className="max-w-xs mb-8"
             />
-            <h1 className="text-3xl font-bold mb-4">Welcome, {companyData.companyName}</h1>
-            <div className="my-8">
+            <h1 className="text-3xl font-bold mb-4 text-center">Welcome, {companyData.companyName}</h1>
+            <div className="w-full max-w-md my-8">
                 <YouTubeEmbed url={companyData.videoUrl} />
             </div>
         </div>
