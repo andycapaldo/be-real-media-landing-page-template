@@ -10,12 +10,9 @@ interface CompanyData {
     token: string;
 }
 
-export async function generateMetadata({
-    params,
-    }: {
-    params: { token: string };
-    }) {
-        const { token } = params;
+export async function generateMetadata(props: any) {
+        const { token } = props.params;
+        
         const adminApp = await initAdmin();
         const db = adminApp.firestore();
 
