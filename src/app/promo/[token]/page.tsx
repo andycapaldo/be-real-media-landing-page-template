@@ -7,6 +7,7 @@ interface CompanyData {
     logoUrl: string;
     companyName: string;
     videoUrl: string;
+    token: string;
 }
 
 export default async function PromoPage(props: any) {
@@ -18,14 +19,17 @@ export default async function PromoPage(props: any) {
     let companyData: CompanyData | null = null;
 
     try {
-        const docRef = db.collection('promoPages').doc(token);
-        const doc = await docRef.get();
-        if (doc.exists) {
-            companyData = doc.data() as CompanyData;
+        const querySnapshot = await db
+            .collection('promoPages')
+            .where('token', '==', token)
+            .limit(1)
+            .get();
+        if (!querySnapshot.empty) {
+            companyData = querySnapshot.docs[0].data() as CompanyData;
         }
-        } catch (error) {
-            console.error('Error fetching promo page data:', error);
-        }
+    } catch (error) {
+        console.error('Error fetching company data:', error);
+    }
 
     if (!companyData) {
         notFound();
