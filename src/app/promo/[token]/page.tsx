@@ -10,6 +10,43 @@ interface CompanyData {
     token: string;
 }
 
+export async function generateMetadata({
+    params,
+    }: {
+    params: { token: string };
+    }) {
+        const { token } = params;
+        const adminApp = await initAdmin();
+        const db = adminApp.firestore();
+
+    let companyData: CompanyData | null = null;
+
+    try {
+        const querySnapshot = await db
+            .collection('promoPages')
+            .where('token', '==', token)
+            .limit(1)
+            .get();
+    if (!querySnapshot.empty) {
+        companyData = querySnapshot.docs[0].data() as CompanyData;
+    }
+    } catch (error) {
+        console.error('Error fetching metadata:', error);
+    }
+
+    if (!companyData) {
+        return {
+            title: 'Promo Page',
+            description: 'Promo page not found.',
+        };
+    }
+
+    return {
+        title: `${companyData.companyName} & BeRealMedia`,
+        escription: `Welcome to the promo page for ${companyData.companyName}. Check out the latest deals and info!`,
+        };
+}
+
 export default async function PromoPage(props: any) {
     const { token } = props.params;
 
@@ -37,6 +74,7 @@ export default async function PromoPage(props: any) {
 
     return (
         <div className="min-h-screen flex flex-col items-center justify-center p-8 font-sans bg-cyan-50">
+            <title>{companyData.companyName}</title>
             <img
             src={companyData.logoUrl}
             alt={`${companyData.companyName} logo`}
