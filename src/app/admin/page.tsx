@@ -9,7 +9,10 @@ export default function CampaignForm() {
         companyName: '',
         logoUrl: '',
         videoUrl: '',
+        researchUrl: '',
+        googleProblemUrl: '',
     });
+    const [bulletPoints, setBulletPoints] = useState<string[]>(['']);
     const [message, setMessage] = useState('');
     
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -19,25 +22,45 @@ export default function CampaignForm() {
             [name]: value,
         }));
     };
+
+    const handleBulletPointChange = (index: number, value: string) => {
+        setBulletPoints((prev) => {
+            const updated = [...prev];
+            updated[index] = value;
+        return updated;
+        });
+    };
+
+    const addBulletPoint = () => {
+        setBulletPoints((prev) => [...prev, '']);
+    };
+    
+    const removeBulletPoint = (index: number) => {
+        setBulletPoints((prev) => prev.filter((_, i) => i !== index));
+    };
     
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         try {
+            const payload = { ...formData, bulletPoints };
             const res = await fetch('/api/campaign', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(formData),
+                body: JSON.stringify(payload),
             });
         if (res.ok) {
             const data = await res.json();
             setMessage(`Campaign created successfully with ID: ${data.id}`);
             setFormData({
                 companyName: '',
-                logoUrl: '',
                 videoUrl: '',
+                logoUrl: '',
+                researchUrl: '',
+                googleProblemUrl: '',
             });
+            setBulletPoints(['']);
         } else {
             setMessage('Failed to create campaign. Please try again.');
         }
@@ -47,6 +70,8 @@ export default function CampaignForm() {
         }
     };
 
+    console.log(JSON.stringify(formData));
+    console.log(bulletPoints);
 
     if (isLoading) {
         return "Loading...";
@@ -72,7 +97,7 @@ export default function CampaignForm() {
                 />
             </div>
             <div className="mb-4">
-                <label htmlFor="logoUrl" className="block text-gray-700 text-sm font-bold mb-2">
+                <label htmlFor="logoFile" className="block text-gray-700 text-sm font-bold mb-2">
                     Company Logo URL
                 </label>
                 <input
@@ -81,6 +106,21 @@ export default function CampaignForm() {
                     name="logoUrl"
                     placeholder="Enter logo URL"
                     value={formData.logoUrl}
+                    onChange={handleChange}
+                    required
+                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                />
+            </div>
+            <div className="mb-4">
+                <label htmlFor="researchImage" className="block text-gray-700 text-sm font-bold mb-2">
+                    Research Section Image URL
+                </label>
+                <input
+                    type="url"
+                    id="researchUrl"
+                    name="researchUrl"
+                    placeholder="Enter Research Section Image URL"
+                    value={formData.researchUrl}
                     onChange={handleChange}
                     required
                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -101,11 +141,59 @@ export default function CampaignForm() {
                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 />
             </div>
+            <div className="mb-4">
+                <label className="block text-gray-700 text-sm font-bold mb-2">
+                    Google Problem Bullet Points
+                </label>
+            {bulletPoints.map((bullet, index) => (
+            <div key={index} className="flex items-center mb-2">
+                <input
+                    type="text"
+                    placeholder={`Bullet point ${index + 1}`}
+                    value={bullet}
+                    onChange={(e) => handleBulletPointChange(index, e.target.value)}
+                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                />
+            {bulletPoints.length > 1 && (
+                <button
+                    type="button"
+                    onClick={() => removeBulletPoint(index)}
+                    className="ml-2 text-red-500"
+                    >
+                    Remove
+                </button>
+                )}
+            </div>
+            ))}
+                <button
+                    type="button"
+                    onClick={addBulletPoint}
+                    className="mt-2 text-blue-500 underline"
+                    >
+                    Add Bullet Point
+                </button>
+            </div>
+            <div className="mb-4">
+                <label htmlFor="googleProblemImage" className="block text-gray-700 text-sm font-bold mb-2">
+                    Google Problem Section Image URL (Optional)
+                </label>
+                <input
+                    type="url"
+                    id="googleProblemUrl"
+                    name="googleProblemUrl"
+                    placeholder="Enter Google Problem Image URL"
+                    value={formData.googleProblemUrl}
+                    onChange={handleChange}
+                    required
+                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                />
+            </div>
                 <div className="bg-blue-500 hover:bg-blue-700 hover:bg-blue-700 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
                     <button className="text-white w-full" type="submit">
                         Submit
                     </button>
                 </div>
+            {message && <p className="mt-4 text-center">{message}</p>}
             </form>
         </div>
     );

@@ -7,7 +7,14 @@ import generateRandomHash from '@/lib/hash';
 export async function POST(request: Request) {
     try {
         const body = await request.json();
-        const { companyName, logoUrl, videoUrl } = body;
+        const { 
+            companyName, 
+            logoUrl, 
+            videoUrl,
+            researchUrl,
+            googleProblemUrl,
+            bulletPoints, 
+        } = body;
 
         const randomHash = generateRandomHash();
 
@@ -30,9 +37,14 @@ export async function POST(request: Request) {
             companyName,
             logoUrl,
             videoUrl,
+            researchUrl: researchUrl || '',
+            googleProblemUrl: googleProblemUrl || '',
+            bulletPoints: bulletPoints || [],
             createdAt: new Date().toISOString(),
             token: randomHash,
         });
+
+        console.log(bulletPoints);
 
         return NextResponse.json(
                 { success: true, id: sanitizedCompanyName},

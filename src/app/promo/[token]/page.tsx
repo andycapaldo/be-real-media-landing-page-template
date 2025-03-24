@@ -6,6 +6,9 @@ import CalendlyEmbed from '@/components/CalendlyEmbed';
 
 interface CompanyData {
     logoUrl: string;
+    researchUrl: string;
+    googleProblemUrl: string;
+    bulletPoints: string[];
     companyName: string;
     videoUrl: string;
     token: string;
@@ -106,7 +109,7 @@ export default async function PromoPage(props: any) {
           {/* Placeholder for Research Image */}
             <div className="w-full max-w-md mx-auto">
                 <img
-                    src={companyData.logoUrl}
+                    src={companyData.researchUrl}
                     alt="Research Image"
                     className="w-full object-cover rounded"
                 />
@@ -117,16 +120,16 @@ export default async function PromoPage(props: any) {
         <section className="mb-12">
             <h3 className="text-2xl font-bold mb-4">The Google Problem</h3>
             <p className="text-lg mb-4">Did you know...</p>
-            <ul className="list-disc list-inside text-lg space-y-2 mb-4">
-                <li>The average Cost Per Lead in the HVAC sector increased by 24.61% last year</li>
-                <li>The average conversion rate plummeted 15.59% last year</li>
-                <li>The average cost per click on Google jumped 6.26% last year</li>
-                <li>In summary, you are paying nearly 25% more per lead while simultaneously receiving 16% less conversions</li>
-            </ul>
-          {/* Placeholder for Image */}
+            {companyData.bulletPoints.length > 0 && (
+                <ul className="list-disc list-inside text-lg space-y-2 mb-4">
+                    {companyData.bulletPoints.map((bullet) => (
+                        <li key={bullet}>{bullet}</li>
+                    ))}
+                </ul>
+            )}
             <div className="w-full max-w-md mx-auto">
                 <img
-                src={companyData.logoUrl}
+                src={companyData.googleProblemUrl}
                 alt="Google Problem Image"
                 className="w-full object-cover rounded"
                 />
@@ -156,7 +159,7 @@ export default async function PromoPage(props: any) {
             {/* Section 5: Trivia */}
             <section className="mb-12">
                 <h3 className="text-2xl font-bold mb-4">Trivia Question</h3>
-                    <h4>What year and team was John Elway drafted by?</h4>
+                    <h3 className='text-lg'>What year and team was John Elway drafted by?</h3>
             </section>
             {/* Section 6: Book a Meeting */}
             <section className='mb-12'>
