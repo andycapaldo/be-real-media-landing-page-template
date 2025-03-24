@@ -169,6 +169,11 @@ export default async function PromoPage(props: any) {
                         <li>Full and custom access to Netflix, Peacock, HBO Max, Hulu, Disney+, ESPN and more</li>
                     </ul>
             </section>
+            {/* Section 6: Trivia */}
+            <section className="mb-12">
+                <h3 className="text-2xl font-bold mb-4">Trivia Question</h3>
+                    <h4>What year and team was John Elway drafted by?</h4>
+            </section>
         </div>
     </div>
     );
