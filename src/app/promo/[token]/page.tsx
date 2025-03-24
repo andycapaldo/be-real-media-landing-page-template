@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation';
 import { initAdmin } from '@/lib/firebaseAdmin';
 import YouTubeEmbed from '@/components/YoutubeEmbed';
+import CalendlyEmbed from '@/components/CalendlyEmbed';
 
 
 interface CompanyData {
@@ -142,24 +143,7 @@ export default async function PromoPage(props: any) {
                         <li>StreamingTV has shown to boost SEM and social efforts</li>
                     </ul>
             </section>
-
-        {/* Section 4: Why Go Premium? */}
-            <section className="mb-12">
-                <h3 className="text-2xl font-bold mb-4">Why Go Premium?</h3>
-                <blockquote className="bg-gray-100 border-l-4 border-blue-500 italic p-4 mb-6 text-lg">
-                    “We've looked at performance. Does TVQI correlate to performance? Are people more likely to buy the product when they run on quality inventory? We found undoubtedly there is strong correlation between the quality of the inventory, more specifically the TVQI, and actual performance and conversion. So quality inventory matters, if you have their attention, it matters. TVQI is a proxy for quality, brand affinity, and attention. Am I associated with something great, and do I have their attention?”
-                    <cite className="block mt-2 text-right text-sm not-italic">– Jeff Green</cite>
-                </blockquote>
-          {/* Placeholder for Image */}
-                <div className="w-full max-w-md mx-auto">
-                    <img
-                        src={companyData.logoUrl}
-                        alt="Premium Benefits Image"
-                        className="w-full object-cover rounded"
-                    />
-                </div>
-            </section>
-            {/* Section 5: Why BeReal is actually different*/}
+            {/* Section 4: Why BeReal is actually different*/}
             <section className="mb-12">
                 <h3 className="text-2xl font-bold mb-4">Why BeReal is <span className='text-red-500'>actually</span> different</h3>
                     <ul className="list-disc list-inside text-lg space-y-2">
@@ -169,10 +153,15 @@ export default async function PromoPage(props: any) {
                         <li>Full and custom access to Netflix, Peacock, HBO Max, Hulu, Disney+, ESPN and more</li>
                     </ul>
             </section>
-            {/* Section 6: Trivia */}
+            {/* Section 5: Trivia */}
             <section className="mb-12">
                 <h3 className="text-2xl font-bold mb-4">Trivia Question</h3>
                     <h4>What year and team was John Elway drafted by?</h4>
+            </section>
+            {/* Section 6: Book a Meeting */}
+            <section className='mb-12'>
+                <h3 className="text-2xl font-bold mb-4">Book a Meeting with BRM</h3>
+                <CalendlyEmbed />
             </section>
         </div>
     </div>
