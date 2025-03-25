@@ -1,7 +1,8 @@
 "use client";
 
 import { useAuth } from "@/lib/use-auth";
-import { useState } from "react";
+import { useState, useEffect} from "react";
+
 
 export default function CampaignForm() {
     const { isLoading } = useAuth();
@@ -14,6 +15,7 @@ export default function CampaignForm() {
     });
     const [bulletPoints, setBulletPoints] = useState<string[]>(['']);
     const [message, setMessage] = useState('');
+    const [campaigns, setCampaigns] = useState<any[]>([]);
     
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -70,8 +72,29 @@ export default function CampaignForm() {
         }
     };
 
-    console.log(JSON.stringify(formData));
-    console.log(bulletPoints);
+    useEffect(() => {
+        async function fetchCampaigns() {
+            const res = await fetch(
+            "/api/campaign", {
+                method: "GET"
+            });
+            const data = await res.json();
+            setCampaigns(data.campaigns);
+        }
+        fetchCampaigns();
+    }, []);
+
+    const handleDelete = async (id: string) => {
+        const res = await fetch(`/api/campaign/${id}`, {
+            method: "DELETE",
+        });
+        if (res.ok) {
+            setMessage("Campaign deleted successfully");
+            setCampaigns((prev) => prev.filter((campaign) => campaign.id !== id));
+        } else {
+            setMessage("Failed to delete campaign");
+        }
+    };
 
     if (isLoading) {
         return "Loading...";
@@ -195,6 +218,26 @@ export default function CampaignForm() {
                 </div>
             {message && <p className="mt-4 text-center">{message}</p>}
             </form>
+            <div className='bg-white p-8 rounded shadow-md w-full max-w-md m-8'>
+                <div>
+                    <h2 className="text-2xl font-bold mb-6">Edit/Delete Existing Campaigns</h2>
+                </div>
+                <div className="">
+                    <ul>
+                        {campaigns.map((campaign) => (
+                        <>
+                            <li key={campaign.id}>
+                                {campaign.companyName}
+                            </li>
+                            <div className="my-3 flex justify-around">
+                                <button onClick={() => handleDelete(campaign.id)} className="text-red-600 bg-red-100 mx-3 py-3 px-5">Delete</button>
+                                <button onClick={() => console.log(campaign.id)} className="text-green-600 bg-green-100 mx-3 py-3 px-5">Edit</button>
+                            </div>
+                        </>
+                        ))}
+                    </ul>
+                </div>
+            </div>
         </div>
     );
 }

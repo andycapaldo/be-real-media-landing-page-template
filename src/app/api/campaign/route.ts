@@ -57,4 +57,26 @@ export async function POST(request: Request) {
                 { status: 500 }
             );
         }
-    }   
+    }
+
+
+export async function GET(request: Request) {
+    try {
+        const adminApp = await initAdmin();
+        const db = adminApp.firestore();
+
+        const snapshot = await db.collection('promoPages').get();
+        const campaigns = snapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+        }));
+        
+        return NextResponse.json({ campaigns });
+    } catch (error) {
+        console.error('Error fetching campaigns:', error);
+        return NextResponse.json(
+            { error: 'Internal Server Error' },
+            { status: 500 }
+        );
+    }
+}
