@@ -3,10 +3,7 @@
 import { NextResponse } from 'next/server';
 import { initAdmin } from '@/lib/firebaseAdmin';
 
-export async function DELETE(
-    request: Request,
-    { params }: { params: { id: string } }
-) {
+export async function DELETE(request: Request, params: any) {
     try {
         const adminApp = await initAdmin();
         const db = adminApp.firestore();
