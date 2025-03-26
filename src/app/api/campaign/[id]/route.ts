@@ -3,7 +3,7 @@
 import { NextResponse } from 'next/server';
 import { initAdmin } from '@/lib/firebaseAdmin';
 
-export async function DELETE(request: Request, { params }: { params: { id: string } }) {
+export async function DELETE(request: Request, { params }: { params: Promise<{ id: string }> }) {
     const { id } = await params;
     try {
         const adminApp = await initAdmin();
@@ -18,7 +18,7 @@ export async function DELETE(request: Request, { params }: { params: { id: strin
     }
 }
 
-export async function PATCH(request: Request, { params }: { params: { id: string } }){
+export async function PATCH(request: Request, { params }: { params: Promise<{ id: string }> }){
     const { id } = await params;
     try{
         const body = await request.json();
