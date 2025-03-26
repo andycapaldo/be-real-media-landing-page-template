@@ -1,7 +1,19 @@
 "use client";
 
 import { useAuth } from "@/lib/use-auth";
-import { useState, useEffect} from "react";
+import { useState, useEffect, useCallback} from "react";
+import EditCampaignModal from "@/components/EditCampaignModal";
+
+
+interface Campaign {
+    id: string;
+    companyName: string;
+    logoUrl: string;
+    videoUrl: string;
+    researchUrl: string;
+    googleProblemUrl: string;
+    bulletPoints: string[];
+}
 
 
 export default function CampaignForm() {
@@ -16,6 +28,18 @@ export default function CampaignForm() {
     const [bulletPoints, setBulletPoints] = useState<string[]>(['']);
     const [message, setMessage] = useState('');
     const [campaigns, setCampaigns] = useState<any[]>([]);
+    const [selectedCampaign, setSelectedCampaign] = useState<Campaign | null>(null);
+    const [showModal, setShowModal] = useState(false);
+
+    const fetchCampaigns = useCallback(async () => {
+        try {
+            const res = await fetch("/api/campaign", { method: "GET" });
+            const data = await res.json();
+            setCampaigns(data.campaigns);
+        } catch (error) {
+            console.error("Error fetching campaigns", error);
+        }
+    }, []);
     
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -63,6 +87,7 @@ export default function CampaignForm() {
                 googleProblemUrl: '',
             });
             setBulletPoints(['']);
+            handleUpdate();
         } else {
             setMessage('Failed to create campaign. Please try again.');
         }
@@ -73,16 +98,23 @@ export default function CampaignForm() {
     };
 
     useEffect(() => {
-        async function fetchCampaigns() {
-            const res = await fetch(
-            "/api/campaign", {
-                method: "GET"
-            });
-            const data = await res.json();
-            setCampaigns(data.campaigns);
-        }
         fetchCampaigns();
-    }, []);
+    }, [fetchCampaigns]);
+
+    
+    const handleEdit = (campaign: Campaign) => {
+        setSelectedCampaign(campaign);
+        setShowModal(true);
+    };
+    
+    const handleModalClose = () => {
+        setShowModal(false);
+        setSelectedCampaign(null);
+    };
+    
+    const handleUpdate = () => {
+        fetchCampaigns();
+    }
 
     const handleDelete = async (id: string) => {
         const res = await fetch(`/api/campaign/${id}`, {
@@ -225,17 +257,23 @@ export default function CampaignForm() {
                 <div className="">
                     <ul>
                         {campaigns.map((campaign) => (
-                        <>
                             <li key={campaign.id}>
                                 {campaign.companyName}
+                            
+                                <div className="my-3 flex justify-around">
+                                    <button onClick={() => handleDelete(campaign.id)} className="text-red-100 bg-red-600 mx-3 py-3 px-5 hover:bg-red-300 hover:text-red-600">Delete</button>
+                                    <button onClick={() => handleEdit(campaign)} className="text-green-100 bg-green-600 mx-3 py-3 px-5 hover:bg-green-300 hover:text-green-600">Edit</button>
+                                </div>
                             </li>
-                            <div className="my-3 flex justify-around">
-                                <button onClick={() => handleDelete(campaign.id)} className="text-red-600 bg-red-100 mx-3 py-3 px-5">Delete</button>
-                                <button onClick={() => console.log(campaign.id)} className="text-green-600 bg-green-100 mx-3 py-3 px-5">Edit</button>
-                            </div>
-                        </>
                         ))}
                     </ul>
+                    {showModal && selectedCampaign && (
+                        <EditCampaignModal
+                            initialData={selectedCampaign}
+                            onClose={handleModalClose}
+                            onUpdate={handleUpdate}
+                        />
+                    )}
                 </div>
             </div>
         </div>
