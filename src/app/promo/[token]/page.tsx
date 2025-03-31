@@ -90,7 +90,7 @@ export default async function PromoPage(props: any) {
                 <ol className="list-decimal list-inside text-left mx-auto max-w-lg space-y-3 mb-8">
                     <li className="text-lg font-semibold">Research based on your target audience and service areas</li>
                     <li className="text-lg font-semibold">The Google Problem: Are you overpaying on Google?</li>
-                    <li className="text-lg font-semibold">Why StreamingTV is dominating?</li>
+                    <li className="text-lg font-semibold">Why Streaming TV is dominating?</li>
                     <li className="text-lg font-semibold">What makes BeReal different?</li>
                     <li className="text-lg font-semibold">Trivia</li>
                 </ol>
@@ -140,10 +140,10 @@ export default async function PromoPage(props: any) {
             <section className="mb-12">
                 <h3 className="text-2xl font-bold mb-4">Why Streaming TV is Dominating</h3>
                     <ul className="list-disc list-inside text-lg space-y-2">
-                        <li>The average American spends 3.5 hours watching StreamingTV per day</li>
-                        <li>Stop wasting impressions! StreamingTV can be targeted to those with a Household income of $150,000+ <span className='font-bold underline'>AND</span> in-market for HVAC services.</li>
-                        <li>StreamingTV can have a radius the size of x to ensure we are only delivering within your service areas</li>
-                        <li>StreamingTV has shown to boost SEM and social efforts</li>
+                        <li>The average American spends 3.5 hours watching Streaming TV per day</li>
+                        <li>Stop wasting impressions! Streaming TV can be targeted to those with a Household income of $150,000+ <span className='font-bold underline'>AND</span> in-market for HVAC services.</li>
+                        <li>Streaming TV can have a radius the size of x to ensure we are only delivering within your service areas</li>
+                        <li>Streaming TV has shown to boost SEM and social efforts</li>
                     </ul>
             </section>
             {/* Section 4: Why BeReal is actually different*/}
