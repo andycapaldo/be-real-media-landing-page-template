@@ -86,7 +86,7 @@ export default async function PromoPage(props: any) {
                 alt={`${companyData.companyName} logo`}
                 className="mx-auto max-w-xs mb-6"
             />
-            <h2 className="text-xl font-bold mb-4">Below You Will Find (3 Mins):</h2>
+            <h2 className="text-xl font-bold mb-4">Below You Will Find (3 Min):</h2>
                 <ol className="list-decimal list-inside text-left mx-auto max-w-lg space-y-3 mb-8">
                     <li className="text-lg font-semibold">Research based on your target audience and service areas</li>
                     <li className="text-lg font-semibold">The Google Problem: Are you overpaying on Google?</li>
