@@ -12,6 +12,7 @@ interface Campaign {
     videoUrl: string;
     researchUrl: string;
     bulletPoints: string[];
+    serviceAreaPoints: string[];
 }
 
 
@@ -23,6 +24,7 @@ export default function CampaignForm() {
         videoUrl: '',
         researchUrl: '',
     });
+    const [serviceAreaPoints, setServiceAreaPoints] = useState<string[]>(['']);
     const [bulletPoints, setBulletPoints] = useState<string[]>(['']);
     const [message, setMessage] = useState('');
     const [campaigns, setCampaigns] = useState<any[]>([]);
@@ -51,7 +53,7 @@ export default function CampaignForm() {
         setBulletPoints((prev) => {
             const updated = [...prev];
             updated[index] = value;
-        return updated;
+            return updated;
         });
     };
 
@@ -62,11 +64,27 @@ export default function CampaignForm() {
     const removeBulletPoint = (index: number) => {
         setBulletPoints((prev) => prev.filter((_, i) => i !== index));
     };
+
+    const handleServiceBulletPointChange = (index: number, value: string) => {
+        setServiceAreaPoints((prev) => {
+            const updated = [...prev];
+            updated[index] = value;
+            return updated;
+        });
+    };
+
+    const addServiceBulletPoint = () => {
+        setServiceAreaPoints((prev) => [...prev, '']);  
+    };
+
+    const removeServiceBulletPoint = (index: number) => {
+        setServiceAreaPoints((prev) => prev.filter((_, i) => i !== index));
+    };
     
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         try {
-            const payload = { ...formData, bulletPoints };
+            const payload = { ...formData, bulletPoints, serviceAreaPoints };
             const res = await fetch('/api/campaign', {
                 method: 'POST',
                 headers: {
@@ -177,6 +195,38 @@ export default function CampaignForm() {
                     required
                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 />
+            </div>
+            <div className="mb-4">
+                <label className="block text-gray-700 text-sm font-bold mb-2">
+                    Service Areas Bullet Points
+                </label>
+            {serviceAreaPoints.map((bullet, index) => (
+            <div key={index} className="flex items-center mb-2">
+                <input
+                    type="text"
+                    placeholder={`Bullet point ${index + 1}`}
+                    value={bullet}
+                    onChange={(e) => handleServiceBulletPointChange(index, e.target.value)}
+                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                />
+            {serviceAreaPoints.length > 1 && (
+                <button
+                    type="button"
+                    onClick={() => removeServiceBulletPoint(index)}
+                    className="ml-2 text-red-500"
+                    >
+                    Remove
+                </button>
+                )}
+            </div>
+            ))}
+                <button
+                    type="button"
+                    onClick={addServiceBulletPoint}
+                    className="mt-2 text-blue-500 underline"
+                    >
+                    Add Bullet Point
+                </button>
             </div>
             <div className="mb-4">
                 <label htmlFor="videoUrl" className="block text-gray-700 text-sm font-bold mb-2">

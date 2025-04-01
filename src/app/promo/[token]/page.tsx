@@ -11,6 +11,7 @@ interface CompanyData {
     companyName: string;
     videoUrl: string;
     token: string;
+    serviceAreaPoints: string[];
 }
 
 export async function generateMetadata(props: any) {
@@ -105,6 +106,13 @@ export default async function PromoPage(props: any) {
         <section className="mb-12">
             <h3 className="text-2xl font-bold mb-4">{companyData.companyName} Research</h3>
             <p className="text-lg mb-4">Let's take a look at your service areas:</p>
+            {companyData.serviceAreaPoints.length > 0 && (
+                <ul className="list-disc list-inside text-lg space-y-2 mb-4">
+                    {companyData.serviceAreaPoints.map((bullet) => (
+                        <li key={bullet}>{bullet}</li>
+                    ))}
+                </ul>
+            )}
           {/* Placeholder for Research Image */}
             <div className="w-full max-w-md mx-auto">
                 <img
@@ -151,6 +159,8 @@ export default async function PromoPage(props: any) {
                     <ul className="list-disc list-inside text-lg space-y-2">
                         <li>15+ years of experience in digital marketing</li>
                         <li>Budget buying vs Impression buying</li>
+                        <li>BeRealMedia University</li>
+                        <li>Transparent Pricing by Platform</li>
                         <li>Powered by The Trade Desk</li>
                         <li>Full and custom access to Netflix, Peacock, HBO Max, Hulu, Disney+, ESPN and more</li>
                     </ul>

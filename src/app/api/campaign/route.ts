@@ -13,7 +13,8 @@ export async function POST(request: Request) {
             videoUrl,
             researchUrl,
             googleProblemUrl,
-            bulletPoints, 
+            bulletPoints,
+            serviceAreaPoints,
         } = body;
 
         const randomHash = generateRandomHash();
@@ -40,11 +41,10 @@ export async function POST(request: Request) {
             researchUrl: researchUrl || '',
             googleProblemUrl: googleProblemUrl || '',
             bulletPoints: bulletPoints || [],
+            serviceAreaPoints: serviceAreaPoints || [],
             createdAt: new Date().toISOString(),
             token: randomHash,
         });
-
-        console.log(bulletPoints);
 
         return NextResponse.json(
                 { success: true, id: sanitizedCompanyName},
