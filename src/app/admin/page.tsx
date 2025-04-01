@@ -11,7 +11,6 @@ interface Campaign {
     logoUrl: string;
     videoUrl: string;
     researchUrl: string;
-    googleProblemUrl: string;
     bulletPoints: string[];
 }
 
@@ -23,7 +22,6 @@ export default function CampaignForm() {
         logoUrl: '',
         videoUrl: '',
         researchUrl: '',
-        googleProblemUrl: '',
     });
     const [bulletPoints, setBulletPoints] = useState<string[]>(['']);
     const [message, setMessage] = useState('');
@@ -84,7 +82,6 @@ export default function CampaignForm() {
                 videoUrl: '',
                 logoUrl: '',
                 researchUrl: '',
-                googleProblemUrl: '',
             });
             setBulletPoints(['']);
             handleUpdate();
@@ -227,21 +224,6 @@ export default function CampaignForm() {
                     >
                     Add Bullet Point
                 </button>
-            </div>
-            <div className="mb-4">
-                <label htmlFor="googleProblemImage" className="block text-gray-700 text-sm font-bold mb-2">
-                    Google Problem Section Image URL (Optional)
-                </label>
-                <input
-                    type="url"
-                    id="googleProblemUrl"
-                    name="googleProblemUrl"
-                    placeholder="Enter Google Problem Image URL"
-                    value={formData.googleProblemUrl}
-                    onChange={handleChange}
-                    required
-                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                />
             </div>
                 <div className="bg-blue-500 hover:bg-blue-700 hover:bg-blue-700 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
                     <button className="text-white w-full" type="submit">

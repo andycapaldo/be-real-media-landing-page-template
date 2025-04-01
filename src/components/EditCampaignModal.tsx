@@ -8,7 +8,6 @@ interface EditCampaignModalProps {
         logoUrl: string;
         videoUrl: string;
         researchUrl: string;
-        googleProblemUrl: string;
         bulletPoints: string[];
     };
     onClose: () => void;
@@ -123,18 +122,6 @@ export default function EditCampaignModal({ initialData, onClose, onUpdate }: Ed
                         type="url"
                         name="researchUrl"
                         value={formData.researchUrl}
-                        onChange={handleChange}
-                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    />
-                </div>
-                <div className="mb-4">
-                    <label className="block text-gray-700 text-sm font-bold mb-2">
-                    Google Problem Image URL
-                    </label>
-                    <input
-                        type="url"
-                        name="googleProblemUrl"
-                        value={formData.googleProblemUrl}
                         onChange={handleChange}
                         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     />
