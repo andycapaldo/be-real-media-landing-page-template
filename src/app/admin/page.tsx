@@ -3,6 +3,8 @@
 import { useAuth } from "@/lib/use-auth";
 import { useState, useEffect, useCallback} from "react";
 import EditCampaignModal from "@/components/EditCampaignModal";
+import { storage } from "@/lib/firebaseClient";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 
 interface Campaign {
@@ -19,15 +21,17 @@ export default function CampaignForm() {
     const { isLoading } = useAuth();
     const [formData, setFormData] = useState({
         companyName: '',
-        logoUrl: '',
         videoUrl: '',
-        researchUrl: '',
     });
     const [bulletPoints, setBulletPoints] = useState<string[]>(['']);
     const [message, setMessage] = useState('');
     const [campaigns, setCampaigns] = useState<any[]>([]);
     const [selectedCampaign, setSelectedCampaign] = useState<Campaign | null>(null);
     const [showModal, setShowModal] = useState(false);
+    const [researchUrl, setResearchUrl] = useState('');
+    const [researchFile, setResearchFile] = useState<File | null>(null);
+    const [logoUrl, setLogoUrl] = useState('');
+    const [logoFile, setLogoFile] = useState<File | null>(null);
 
     const fetchCampaigns = useCallback(async () => {
         try {
@@ -62,11 +66,54 @@ export default function CampaignForm() {
     const removeBulletPoint = (index: number) => {
         setBulletPoints((prev) => prev.filter((_, i) => i !== index));
     };
+
+    async function uploadImage(file: File, folder: string): Promise<string> {
+        const storageRef = ref(storage, `${folder}/${Date.now()}_${file.name}`);
+        await uploadBytes(storageRef, file);
+        const url = await getDownloadURL(storageRef);
+        return url;
+    };
+
+    const handleLogoFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files && e.target.files[0]) {
+            setLogoFile(e.target.files[0]);
+        }
+    };
+
+    const handleResearchFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files && e.target.files[0]) {
+            setResearchFile(e.target.files[0]);
+        }
+    };
+
+    const handleLogoUpload = async () => {
+        if (logoFile) {
+            try {
+                const url = await uploadImage(logoFile, "campaigns/logo");
+                setLogoUrl(url);
+            } catch (error) {
+                console.error("Error uploading logo", error);
+                setMessage("Error uploading logo. Please try again.");
+            }
+        }
+    };
+
+    const handleResearchUpload = async () => {
+        if (researchFile) {
+            try {
+                const url = await uploadImage(researchFile, "campaigns/research");
+                setResearchUrl(url);
+            } catch (error) {
+                console.error("Error uploading research image", error);
+                setMessage("Error uploading research image. Please try again.");}
+        }
+    };
+
     
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        const payload = { ...formData, logoUrl, researchUrl, bulletPoints };
         try {
-            const payload = { ...formData, bulletPoints };
             const res = await fetch('/api/campaign', {
                 method: 'POST',
                 headers: {
@@ -80,9 +127,9 @@ export default function CampaignForm() {
             setFormData({
                 companyName: '',
                 videoUrl: '',
-                logoUrl: '',
-                researchUrl: '',
             });
+            setLogoUrl('');
+            setResearchUrl('');
             setBulletPoints(['']);
             handleUpdate();
         } else {
@@ -150,33 +197,37 @@ export default function CampaignForm() {
             </div>
             <div className="mb-4">
                 <label htmlFor="logoFile" className="block text-gray-700 text-sm font-bold mb-2">
-                    Company Logo URL
+                    Upload Company Logo
                 </label>
                 <input
-                    type="url"
-                    id="logoUrl"
-                    name="logoUrl"
-                    placeholder="Enter logo URL"
-                    value={formData.logoUrl}
-                    onChange={handleChange}
+                    type="file"
+                    id="logoFile"
+                    accept="image/*"
+                    onChange={handleLogoFileChange}
                     required
-                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    className="mb-2 bg-gray-200 hover:bg-gray-400 hover:text-white"
                 />
+                <button type="button" onClick={handleLogoUpload} className="bg-blue-500 hover:bg-blue-700 font-bold text-white px-4 py-2 rounded">
+                    Upload Logo
+                </button>
+                {logoUrl && <p className="mt-2 text-green-600">Uploaded: {logoUrl}</p>}
             </div>
             <div className="mb-4">
                 <label htmlFor="researchImage" className="block text-gray-700 text-sm font-bold mb-2">
-                    Research Section Image URL
+                    Upload Research Section Image
                 </label>
                 <input
-                    type="url"
-                    id="researchUrl"
-                    name="researchUrl"
-                    placeholder="Enter Research Section Image URL"
-                    value={formData.researchUrl}
-                    onChange={handleChange}
+                    type="file"
+                    id="researchFile"
+                    accept="image/*"
+                    onChange={handleResearchFileChange}
                     required
-                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    className="mb-2 bg-gray-200 hover:bg-gray-400 hover:text-white"
                 />
+            <button type="button" onClick={handleResearchUpload} className="bg-blue-500 hover:bg-blue-700 font-bold text-white px-4 py-2 rounded">
+                Upload Research Image
+            </button>
+                {researchUrl && <p className="mt-2 text-green-600">Uploaded: {researchUrl}</p>}
             </div>
             <div className="mb-4">
                 <label htmlFor="videoUrl" className="block text-gray-700 text-sm font-bold mb-2">
@@ -225,7 +276,7 @@ export default function CampaignForm() {
                     Add Bullet Point
                 </button>
             </div>
-                <div className="bg-blue-500 hover:bg-blue-700 hover:bg-blue-700 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                <div className="bg-blue-500 hover:bg-blue-700 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
                     <button className="text-white w-full" type="submit">
                         Submit
                     </button>
