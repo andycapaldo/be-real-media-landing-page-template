@@ -105,7 +105,7 @@ export default async function PromoPage(props: any) {
         {/* Section 1: Company Research */}
         <section className="mb-12">
             <h3 className="text-2xl font-bold mb-4">{companyData.companyName} Research</h3>
-            <p className="text-lg mb-4">Let's take a look at your service areas:</p>
+            <p className="text-lg mb-8">Let's take a look at your service areas:</p>
             {companyData.serviceAreaPoints.length > 0 && (
                 <ul className="list-disc list-inside text-lg space-y-2 mb-4">
                     {companyData.serviceAreaPoints.map((bullet) => (
@@ -148,9 +148,10 @@ export default async function PromoPage(props: any) {
                 <h3 className="text-2xl font-bold mb-4">Why Streaming TV is Dominating</h3>
                     <ul className="list-disc list-inside text-lg space-y-2">
                         <li>The average American spends 3.5 hours watching Streaming TV per day</li>
-                        <li>Stop wasting impressions! Streaming TV can be targeted to those with a Household income of $150,000+ <span className='font-bold underline'>AND</span> in-market for HVAC services.</li>
-                        <li>Streaming TV can have a radius the size of x to ensure we are only delivering within your service areas</li>
+                        <li>Stop wasting impressions! Streaming TV can be targeted to those with a 20+ year old home and in-market for your services</li>
+                        <li>Streaming TV can have a radius the size of one mile to ensure we are only delivering within your service areas</li>
                         <li>Streaming TV has shown to boost SEM and social efforts</li>
+                        <li>Ad-Supported Viewership continues to climb while traditional TV continues to decline</li>
                     </ul>
             </section>
             {/* Section 4: Why BeReal is actually different*/}
@@ -168,14 +169,23 @@ export default async function PromoPage(props: any) {
             {/* Section 5: Trivia */}
             <section className="mb-12">
                 <h3 className="text-2xl font-bold mb-4">Trivia Question</h3>
-                    <h3 className='text-lg'>What year and team was John Elway drafted by?</h3>
+                    <h3 className='text-lg mb-8'>What year and team was John Elway drafted by?</h3>
+                <div className='w-full max-w-md mx-auto'>
+                    <img
+                        src='https://firebasestorage.googleapis.com/v0/b/be-real-api.firebasestorage.app/o/n1o2m3d9rpbp3jmyj1qn.jpg?alt=media&token=ff7aa0c2-f6d5-48d9-92e9-b6e8685e9dcf'
+                        alt="Google Problem Image"
+                        className="w-full object-cover rounded"
+                    />
+                </div>
             </section>
             {/* Section 6: Book a Meeting */}
             <section className='mb-12'>
-                <h3 className="text-2xl font-bold mb-4">Book a Meeting with BRM</h3>
+                <h3 className="text-2xl font-bold mb-8">Book a Meeting with BRM</h3>
                 <CalendlyEmbed />
             </section>
         </div>
     </div>
     );
 }
+
+// https://firebasestorage.googleapis.com/v0/b/be-real-api.firebasestorage.app/o/n1o2m3d9rpbp3jmyj1qn.jpg?alt=media&token=ff7aa0c2-f6d5-48d9-92e9-b6e8685e9dcf
