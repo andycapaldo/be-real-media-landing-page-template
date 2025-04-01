@@ -9,6 +9,7 @@ interface EditCampaignModalProps {
         videoUrl: string;
         researchUrl: string;
         bulletPoints: string[];
+        serviceAreaPoints: string[];
     };
     onClose: () => void;
     onUpdate: () => void;
@@ -42,6 +43,25 @@ export default function EditCampaignModal({ initialData, onClose, onUpdate }: Ed
         setFormData((prev) => {
             const updated = prev.bulletPoints.filter((_, i) => i !== index);
             return { ...prev, bulletPoints: updated };
+        });
+    };
+
+    const handleServiceBulletPointChange = (index: number, value: string) => {
+        setFormData((prev) => {
+        const updated = [...prev.serviceAreaPoints];
+        updated[index] = value;
+        return { ...prev, serviceAreaPoints: updated };
+        });
+    };
+
+    const addServiceBulletPoint = () => {
+        setFormData((prev) => ({ ...prev, serviceAreaPoints: [...prev.serviceAreaPoints, ""] }));
+    };
+
+    const removeServiceBulletPoint = (index: number) => {
+        setFormData((prev) => {
+            const updated = prev.serviceAreaPoints.filter((_, i) => i !== index);
+            return { ...prev, serviceAreaPoints: updated };
         });
     };
 
@@ -125,6 +145,37 @@ export default function EditCampaignModal({ initialData, onClose, onUpdate }: Ed
                         onChange={handleChange}
                         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     />
+                </div>
+                <div className="mb-4">
+                    <label className="block text-gray-700 text-sm font-bold mb-2">
+                        Service Area Bullet Points
+                    </label>
+                    {formData.serviceAreaPoints.map((bp, i) => (
+                    <div key={i} className="flex items-center mb-2">
+                        <input
+                            type="text"
+                            value={bp}
+                            onChange={(e) => handleServiceBulletPointChange(i, e.target.value)}
+                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        />
+                        {formData.serviceAreaPoints.length > 1 && (
+                        <button
+                            type="button"
+                            onClick={() => removeServiceBulletPoint(i)}
+                            className="ml-2 text-red-500"
+                        >
+                            Remove
+                        </button>
+                        )}
+                    </div>
+                    ))}
+                    <button
+                        type="button"
+                        onClick={addServiceBulletPoint}
+                        className="mt-2 text-blue-500 underline"
+                    >
+                    Add Bullet Point
+                    </button>
                 </div>
                 <div className="mb-4">
                     <label className="block text-gray-700 text-sm font-bold mb-2">
