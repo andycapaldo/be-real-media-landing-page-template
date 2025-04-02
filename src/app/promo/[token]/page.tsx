@@ -79,7 +79,7 @@ export default async function PromoPage(props: any) {
         {/* Header Section */}
         <header className="text-center mb-12">
             <h1 className="text-3xl font-bold mb-6">
-            THANK YOU FOR VISITING THE CUSTOM RESEARCH PAGE FOR {companyData.companyName.toUpperCase()} BUILT BY BeRealMedia
+            THANK YOU FOR VISITING THE CUSTOM RESEARCH PAGE FOR {companyData.companyName.toUpperCase()} BUILT BY BeReal Media
             </h1>
             <img
                 src={companyData.logoUrl}
@@ -160,7 +160,7 @@ export default async function PromoPage(props: any) {
                     <ul className="list-disc list-inside text-lg space-y-2">
                         <li>15+ years of experience in digital marketing</li>
                         <li>Budget buying vs Impression buying</li>
-                        <li>BeRealMedia University</li>
+                        <li>BeReal Media University</li>
                         <li>Transparent Pricing by Platform</li>
                         <li>Powered by The Trade Desk</li>
                         <li>Full and custom access to Netflix, Peacock, HBO Max, Hulu, Disney+, ESPN and more</li>
