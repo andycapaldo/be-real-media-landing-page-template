@@ -3,6 +3,7 @@
 import { useAuth } from "@/lib/use-auth";
 import { useState, useEffect, useCallback} from "react";
 import EditCampaignModal from "@/components/EditCampaignModal";
+import Link from "next/dist/client/link";
 
 
 interface Campaign {
@@ -13,6 +14,7 @@ interface Campaign {
     researchUrl: string;
     bulletPoints: string[];
     serviceAreaPoints: string[];
+    token: string;
 }
 
 
@@ -290,7 +292,7 @@ export default function CampaignForm() {
                     <ul>
                         {campaigns.map((campaign) => (
                             <li key={campaign.id}>
-                                {campaign.companyName}
+                                <Link className='underline text-blue-500' href={`/promo/${campaign.token}`}>{campaign.companyName}</Link>
                             
                                 <div className="my-3 flex justify-around">
                                     <button onClick={() => handleDelete(campaign.id)} className="text-red-100 bg-red-600 mx-3 py-3 px-5 hover:bg-red-300 hover:text-red-600">Delete</button>
