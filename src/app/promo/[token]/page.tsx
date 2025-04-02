@@ -79,7 +79,7 @@ export default async function PromoPage(props: any) {
         {/* Header Section */}
         <header className="text-center mb-12">
             <h1 className="text-3xl font-bold mb-6">
-            THANK YOU FOR VISITING THE {companyData.companyName.toUpperCase()} PREMIUM VIDEO PAGE
+            THANK YOU FOR VISITING THE CUSTOM RESEARCH PAGE FOR {companyData.companyName.toUpperCase()} BUILT BY BeRealMedia
             </h1>
             <img
                 src={companyData.logoUrl}
@@ -169,7 +169,7 @@ export default async function PromoPage(props: any) {
             {/* Section 5: Trivia */}
             <section className="mb-12">
                 <h3 className="text-2xl font-bold mb-4">Trivia Question</h3>
-                    <h3 className='text-lg mb-8'>What year and team was John Elway drafted by?</h3>
+                    <h3 className='text-lg mb-8'>What year and team was John Elway drafted by? (You win $500 off your first campaign if answered correctly) </h3>
                 <div className='w-full max-w-md mx-auto'>
                     <img
                         src='https://firebasestorage.googleapis.com/v0/b/be-real-api.firebasestorage.app/o/n1o2m3d9rpbp3jmyj1qn.jpg?alt=media&token=ff7aa0c2-f6d5-48d9-92e9-b6e8685e9dcf'
