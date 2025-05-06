@@ -109,8 +109,8 @@ export default async function PromoPage(props: any) {
             <p className="text-lg mb-8">Let's take a look at your service areas:</p>
             {companyData.serviceAreaPoints.length > 0 && (
                 <ul className="list-disc list-inside text-lg space-y-2 mb-4">
-                    {companyData.serviceAreaPoints.map((bullet) => (
-                        <li key={bullet}>{bullet}</li>
+                    {companyData.serviceAreaPoints.map((bullet, idx) => (
+                        <li key={idx}>{bullet}</li>
                     ))}
                 </ul>
             )}
@@ -130,8 +130,8 @@ export default async function PromoPage(props: any) {
             <p className="text-lg mb-4">Did you know...</p>
             {companyData.bulletPoints.length > 0 && (
                 <ul className="list-disc list-inside text-lg space-y-2 mb-4">
-                    {companyData.bulletPoints.map((bullet) => (
-                        <li key={bullet}>{bullet}</li>
+                    {companyData.bulletPoints.map((bullet, idx) => (
+                        <li key={idx}>{bullet}</li>
                     ))}
                 </ul>
             )}

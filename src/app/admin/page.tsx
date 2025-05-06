@@ -12,6 +12,7 @@ interface Campaign {
     logoUrl: string;
     videoUrl: string;
     researchUrl: string;
+    googleProblemUrl: string;
     bulletPoints: string[];
     serviceAreaPoints: string[];
     token: string;
@@ -25,6 +26,7 @@ export default function CampaignForm() {
         logoUrl: '',
         videoUrl: '',
         researchUrl: '',
+        googleProblemUrl: '',
     });
     const [serviceAreaPoints, setServiceAreaPoints] = useState<string[]>(['']);
     const [bulletPoints, setBulletPoints] = useState<string[]>(['']);
@@ -102,8 +104,10 @@ export default function CampaignForm() {
                 videoUrl: '',
                 logoUrl: '',
                 researchUrl: '',
+                googleProblemUrl: '',
             });
             setBulletPoints(['']);
+            setServiceAreaPoints(['']);
             handleUpdate();
         } else {
             setMessage('Failed to create campaign. Please try again.');
@@ -240,6 +244,21 @@ export default function CampaignForm() {
                     name="videoUrl"
                     placeholder="Enter video URL"
                     value={formData.videoUrl}
+                    onChange={handleChange}
+                    required
+                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                />
+            </div>
+            <div className="mb-4">
+                <label htmlFor="videoUrl" className="block text-gray-700 text-sm font-bold mb-2">
+                    Google Problem Image URL
+                </label>
+                <input
+                    type="url"
+                    id="googleProblemUrl"
+                    name="googleProblemUrl"
+                    placeholder="Enter Google Problem Image URL"
+                    value={formData.googleProblemUrl}
                     onChange={handleChange}
                     required
                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
