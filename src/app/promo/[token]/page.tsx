@@ -85,7 +85,7 @@ export default async function PromoPage(props: any) {
             <img
                 src={companyData.logoUrl}
                 alt={`${companyData.companyName} logo`}
-                className="mx-auto max-w-xs mb-6"
+                className="mx-auto max-w-sm mb-6"
             />
             <h2 className="text-xl font-bold mb-4">Below You Will Find (3 Min):</h2>
                 <ol className="list-decimal list-inside text-left mx-auto max-w-lg space-y-3 mb-8">
