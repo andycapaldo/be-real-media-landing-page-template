@@ -11,6 +11,7 @@ interface CompanyData {
     companyName: string;
     videoUrl: string;
     token: string;
+    googleProblemUrl: string;
     serviceAreaPoints: string[];
 }
 
@@ -136,7 +137,7 @@ export default async function PromoPage(props: any) {
             )}
             <div className="w-full max-w-md mx-auto">
                 <img
-                src='https://firebasestorage.googleapis.com/v0/b/be-real-api.firebasestorage.app/o/average_cost_per_lead_google_problem.png?alt=media&token=b54d7dff-908a-4099-9f11-c30772feb72f'
+                src={companyData.googleProblemUrl}
                 alt="Google Problem Image"
                 className="w-full object-cover rounded"
                 />
